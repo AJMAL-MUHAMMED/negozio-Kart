@@ -1,0 +1,660 @@
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{!--
+    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css"> --}}
+</head>
+
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                {{!-- <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li> --}}
+                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+        {{#with userDetails}}
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" alt="Admin"
+                                class="rounded-circle" width="150">
+                            <div class="mt-2">
+                                <h5>{{FullName}}</h5>
+                                <p>{{Email}}</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <button type="button" class=" col-12 btn   text-center " data-toggle="modal"
+                                data-target=".bd-example-modal-lg"> <i class="fa fa-pencil-square"
+                                    aria-hidden="true"></i></i>&nbsp &nbsp Edit Profile &nbsp</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <button type="button" class=" col-12 btn   text-center " data-toggle="modal"
+                                data-target="#exampleModal">
+                                <i class="fa fa-address-book-o" aria-hidden="true"></i> &nbsp Add Address
+                            </button>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/userprofile/vieworders" class=" col-12 btn   text-center link-dark ">
+                                <i class="fa fa-file-code-o" aria-hidden="true"></i>&nbsp &nbsp My Orders &nbsp
+                            </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="/userprofile/logout" class=" col-12 btn   text-center link-dark ">
+                                <i class="fa fa-power-off" aria-hidden="true"></i></i>&nbsp &nbsp Logout &nbsp &nbsp
+                                &nbsp&nbsp
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{FullName}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{Email}}
+                            </div>
+                        </div>
+                        <hr>
+
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{MobileNo}}
+                            </div>
+                        </div>
+                        <hr>
+
+
+                        <!-- Button trigger modal -->
+
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                {{!-- modal profile--}}
+                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                                    data-backdrop="static" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="card mb-3">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit Your Profile</h5>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <form action="/userprofile/editprofile/{{_id}}" method="post"
+                                                        id="form">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Full Name</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <input type="text" name="FullName" id="FullName"
+                                                                    value="{{FullName}}">
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Email</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <input type="email" name="Email" id="Email"
+                                                                    value="{{Email}}">
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+
+
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h6 class="mb-0">Mobile</h6>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary">
+                                                                <input type="number" name="MobileNo" id="MobileNo"
+                                                                    value="{{MobileNo}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <hr>
+                                                        <div class="display-end">
+                                                            <button type="submit" id="editprof" value="{{_id}}"
+                                                                class="btn btn-primary " data-toggle="modal"
+                                                                data-target=".bd-example-modal-lg">Save Changes</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {{!-- end modal --}}
+                                {{!-- modal add address --}}
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add New Addres</h5>
+                                            </div>
+                                            <form action="/address/addaddress" method="post" id="addAddress">
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-12 mb-4">
+                                                            <div class="card mb-4">
+                                                                <div class="card-body">
+
+
+
+                                                                    <div class=" form-outline mb-4">
+                                                                        <label class="form-label" for="fullname">Full
+                                                                            Name</label>
+
+                                                                        <input type="text" name="fullname"
+                                                                            id="form7Example3" class="form-control" />
+
+                                                                    </div>
+
+                                                                    <!-- Text input -->
+                                                                    <div class="  form-outline mb-4">
+                                                                        <label class="form-label"
+                                                                            for="landmark">Landmark</label>
+
+                                                                        <input type="text" name="landmark"
+                                                                            id="form7Example3" class="form-control" />
+
+                                                                    </div>
+
+                                                                    <!-- Text input -->
+                                                                    <div class=" colform-outline mb-4">
+                                                                        <label class="form-label"
+                                                                            for="city">City</label>
+                                                                        <input type="text" name="city"
+                                                                            id="form7Example4" class="form-control" />
+
+                                                                    </div>
+
+                                                                    <!-- Email input -->
+                                                                    <div class="form-outline mb-4">
+                                                                        <label class="form-label" for="pincode">Pin
+                                                                            Code</label>
+                                                                        <input type="number" name="pincode"
+                                                                            id="form7Example5" class="form-control" />
+
+                                                                    </div>
+
+                                                                    <!-- Number input -->
+                                                                    <div class="form-outline mb-4">
+                                                                        <label class="form-label" for="mobileno">Mobile
+                                                                            No</label>
+                                                                        <input type="number" name="mobileno"
+                                                                            id="form7Example6" class="form-control" />
+
+                                                                    </div>
+
+                                                                    <!-- Message input -->
+                                                                    <div class="form-outline mb-4">
+                                                                        <label class="form-label"
+                                                                            for="address">Address</label>
+                                                                        <textarea class="form-control" name="address"
+                                                                            id="form7Example7" rows="4"></textarea>
+
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Add Address</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{/with}}
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-12 mb-3">
+                        <table class="table table-light table-striped">
+                            <thead>
+                                <tr>
+                                    {{!-- <th scope="col"></th> --}}
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each address}}
+                                <tr>
+                                    <td scope="row " style="font-weight:450">
+                                        Full Name:&nbsp {{this.Data.fullname}} <br>
+                                        Landmark: &nbsp{{this.Data.landmark}}<br>
+                                        City:&nbsp{{this.Data.city}}<br>
+                                        Pincode:&nbsp {{this.Data.pincode}}<br>
+                                        Mobile No: &nbsp{{this.Data.mobileno}}<br>
+                                        Address:&nbsp {{this.Data.address}}<br>
+                                        <div class="mt-2">
+                                            <a style="cursor: pointer;" data-toggle="modal"
+                                                data-target="#exampleModaledit{{this._id}}">
+                                                <b>Edit</b>
+                                            </a>&nbsp
+                                            <a href="/userprofile/deleteaddress/{{this._id}}"
+                                                style="color:red;text-decoration: none;"><b>Delete</b> </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#each addressEdit}}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModaledit{{this._id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update your Addres</h5>
+                    {{!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> --}}
+                </div>
+
+                <form action="/userprofile/editaddress/{{this._id}}" method="post" id="EditAddress">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="card mb-4">
+
+                                    <div class="card-body">
+                                        <div class="  form-outline mb-4">
+                                            <label class="form-label" for="fullname">Full Name</label>
+                                            <input type="text" name="fullname" id="form7Example3"
+                                                value="{{this.Data.fullname}}" class="form-control" />
+                                        </div>
+                                        <!-- Text input -->
+                                        <div class="  form-outline mb-4">
+                                            <label class="form-label" for="landmark">Landmark</label>
+                                            <input type="text" name="landmark" id="form7Example3"
+                                                value="{{this.Data.landmark}}" class="form-control" />
+
+                                        </div>
+
+                                        <!-- Text input -->
+                                        <div class=" colform-outline mb-4">
+                                            <label class="form-label" for="city">City</label>
+                                            <input type="text" name="city" id="form7Example4" class="form-control"
+                                                value="{{this.Data.city}}" />
+
+                                        </div>
+
+                                        <!-- Email input -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="pincode">Pin Code</label>
+                                            <input type="number" name="pincode" id="form7Example5"
+                                                value="{{this.Data.pincode}}" class="form-control" />
+
+                                        </div>
+
+                                        <!-- Number input -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="mobileno">Mobile No</label>
+                                            <input type="number" name="mobileno" id="form7Example6"
+                                                value="{{this.Data.mobileno}}" class="form-control" />
+
+                                        </div>
+
+                                        <!-- Message input -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="address">Address</label>
+                                            <textarea class="form-control" name="address" id="form7Example7"
+                                                rows="4">{{this.Data.address}}</textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    {{!-- Add address form validation --}}
+    <script>
+        $(document).ready(function () {
+            $("#addAddress").validate({
+                rules: {
+                    fullname: {
+                        required: true,
+
+                    },
+                    landmark: {
+                        required: true,
+
+                    },
+                    city: {
+                        required: true,
+                    },
+                    pincode: {
+                        required: true,
+                    },
+                    mobileno: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    address: {
+                        required: true,
+                    }
+
+                },
+                messages: {
+
+                    fullname: {
+                        required: "Please enter your Full Name",
+
+                    },
+                    landmark: {
+                        required: "Please enter your Landmark",
+
+                    },
+                    city: {
+                        required: "Please enter your city",
+                    },
+                    pincode: {
+                        required: "Please enter your pincode",
+                    },
+                    mobileno: {
+                        required: "Please enter your Mobile Number",
+                        minlength: "Minimum 10 numbers",
+                        maxlength: "Maximum 10 numbers"
+                    },
+                    address: {
+                        required: "Please enter your Address",
+                    }
+                }
+            })
+        })
+    </script>
+    {{!-- Edit Address form Validate --}}
+    <script>
+        $(document).ready(function () {
+            $("#EditAddress").validate({
+                rules: {
+                    fullname: {
+                        required: true,
+
+                    },
+                    landmark: {
+                        required: true,
+
+                    },
+                    city: {
+                        required: true,
+                    },
+                    pincode: {
+                        required: true,
+                    },
+                    mobileno: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    address: {
+                        required: true,
+                    }
+
+                },
+                messages: {
+
+                    fullname: {
+                        required: "Please enter your Full Name",
+
+                    },
+                    landmark: {
+                        required: "Please enter your Landmark",
+
+                    },
+                    city: {
+                        required: "Please enter your city",
+                    },
+                    pincode: {
+                        required: "Please enter your pincode",
+                    },
+                    mobileno: {
+                        required: "Please enter your Mobile Number",
+                        minlength: "Minimum 10 numbers",
+                        maxlength: "Maximum 10 numbers"
+                    },
+                    address: {
+                        required: "Please enter your Address",
+                    }
+                }
+            })
+        })
+    </script>
+    {{!-- Edit Address form Validatio --}}
+    <script>
+        $(document).ready(function () {
+            $("#form").validate({
+                rules: {
+
+                    FullName: {
+                        required: true,
+
+                    },
+                    Email: {
+                        required: true,
+                    },
+                    MobileNo: {
+                        required: true,
+                    }
+
+
+                },
+                messages: {
+
+                    FullName: {
+                        required: "Please enter your Full Name",
+
+                    },
+                    Email: {
+                        required: "Please enter your Email",
+                    },
+                    MobielNo: {
+                        required: "Please enter your Mobile No",
+                    }
+
+                }
+            })
+        })
+    </script>
+    {{!-- axios code for user profile edit --}}
+
+    {{!--
+    <script>
+        document.getElementById('form').addEventListener('submit', e => {
+            e.preventDefault();
+            console.log("worked")
+            const FullName = document.getElementById('FullName').value
+            const Email = document.getElementById('Email').value
+            const MobileNo = document.getElementById('MobileNo').value
+            const userId = document.getElementById('editprof').value
+            editProfile(userId, FullName, Email, MobileNo)
+        })
+
+        const editProfile = async (userId, FullName, Email, MobileNo) => {
+            await axios.post(`/userprofile/editprofile/${userId}`, {
+                FullName, Email, MobileNo
+            })
+        }
+
+    </script> --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.js"></script>
+    <style>
+        hr {
+            border: none;
+            border-top: 1px dashed rgb(47, 8, 102);
+            color: #fff;
+            background-color: #fff;
+            height: 1px;
+            width: 100%%;
+        }
+
+        input {
+            border: 0px;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+
+        body {
+            margin-top: 20px;
+            color: #1a202c;
+            text-align: left;
+            background-color: #e2e8f0;
+        }
+
+        .main-body {
+            padding: 15px;
+        }
+
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        .gutters-sm>.col,
+        .gutters-sm>[class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+
+        .mb-3,
+        .my-3 {
+            margin-bottom: 1rem !important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+
+        .h-100 {
+            height: 100% !important;
+        }
+
+        .shadow-none {
+            box-shadow: none !important;
+        }
+    </style>
+
+
+    {{!-- butent css --}}

@@ -1,0 +1,262 @@
+<head>
+    <title>Shoping Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<div class="content" style="margin-top: 8%;">
+
+    <div class="container">
+        <h2 class="mb-2 p-2" style="background-color:rgb(7, 9, 102) ; color:rgb(247, 241, 241) ;font-weight:600 "> My
+            Orders</h2>
+        {{!-- <a href="/orders/view-order-products" class="btn btn-success mt-1 text-white mb-2 "><i
+                class="icon-cart-add mr-2"></i>
+            View Order Products</a> --}}
+
+        <div class="table-responsive custom-table-responsive">
+
+            <table class="table custom-table" id="Datatable">
+                <thead>
+                    <tr>
+
+                        <th scope="col">
+                            <label class="control control--checkbox">
+                                <input type="checkbox" class="js-check-all" />
+                                <div class="control__indicator"></div>
+                            </label>
+                        </th>
+
+                        <th scope="col">Order</th>
+                        <th scope="col">Payment</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Cancel</th>
+                        <th scope="col">Invoice</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {{#each orders}}
+                    <tr scope="row">
+                        <th scope="row">
+                            <label class="control control--checkbox">
+                                <input type="checkbox" />
+                                <div class="control__indicator"></div>
+                            </label>
+                        </th>
+                        <td>
+                            <a href="/orders/view-order-products/{{this._id}}">{{order this._id}}</a>
+                        </td>
+                        <td>{{this.paymentMethod}}</td>
+                        <td>
+                            {{this.DeliveryAddress}}
+                            {{!-- <small class="d-block">{{this.DeliveryAddress}}</small> --}}
+                        </td>
+                        <td>{{this.date}}</td>
+                        <td>Rs.{{this.grandTotal}}</td>
+
+                        {{#if (eq this.status "placed")}}
+                        <td class="st" style="color: green;">{{this.status}}</td>
+                        {{else if (eq this.status "pending")}}
+                        <td class="st" style="color:rgb(239, 166, 9);">{{this.status}}</td>
+                        {{else if (eq this.status "shipped")}}
+                        <td class="st" style="color:blue;">{{this.status}}</td>
+                        {{else}}
+                        <td class="st" style="color:red;">{{this.status}}</td>
+                        {{/if}}
+                        <td>
+                            <a href="/userprofile/vieworders/order-cancel/{{this._id}}"
+                                class="link-danger">&nbsp&nbsp&nbsp&nbsp<i class="fa fa-ban" aria-hidden="true"></i> </a >
+                        </td>
+
+                        <td>
+                            <a href="/userprofile/vieworders/invoice-download/{{this._id}}"
+                                class="link-primary">Download </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!--===============================================================================================-->
+
+{{!--
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script> --}}
+<!--===============================================================================================-->
+<script src="/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/popper.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/select2/select2.min.js"></script>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    })
+</script>
+<!--===============================================================================================-->
+<script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        $(this).css('position', 'relative');
+        $(this).css('overflow', 'hidden');
+        var ps = new PerfectScrollbar(this, {
+            wheelSpeed: 1,
+            scrollingThreshold: 1000,
+            wheelPropagation: false,
+        });
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+
+    $(document).ready(function () {
+        $('#Datatable').DataTable();
+    });
+</script>
+
+<script>
+
+</script>
+<!--===============================================================================================-->
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+<style>
+    body {
+        font-family: 'lato', sans-serif;
+    }
+
+    .st {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin: 20px 0;
+        text-align: center;
+
+        small {
+            font-size: 0.5em;
+        }
+    }
+
+    .responsive-table {
+        li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            background-color: #95A5A6;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .table-row {
+            background-color: #ffffff;
+            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-1 {
+            flex-basis: 10%;
+        }
+
+        .col-2 {
+            flex-basis: 40%;
+        }
+
+        .col-3 {
+            flex-basis: 25%;
+        }
+
+        .col-4 {
+            flex-basis: 25%;
+        }
+
+        @media all and (max-width: 767px) {
+            .table-header {
+                display: none;
+            }
+
+            .table-row {}
+
+            li {
+                display: block;
+            }
+
+            .col {
+
+                flex-basis: 100%;
+
+            }
+
+            .col {
+                display: flex;
+                padding: 10px 0;
+
+                &:before {
+                    color: #6C7A89;
+                    padding-right: 10px;
+                    content: attr(data-label);
+                    flex-basis: 50%;
+                    text-align: right;
+                }
+            }
+        }
+    }
+</style>

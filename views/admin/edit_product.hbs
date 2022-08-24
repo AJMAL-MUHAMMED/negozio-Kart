@@ -1,0 +1,201 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Product Admin - Dashboard HTML Template</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
+  <!-- https://fonts.google.com/specimen/Roboto -->
+  <link rel="stylesheet" href="/css/fontawesome.min.css">
+  <!-- https://fontawesome.com/ -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="/css/templatemo-style.css">
+  <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+</head>
+
+
+
+<div class="container tm-mt-big tm-mb-big">
+  <div class="row">
+    <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="tm-block-title d-inline-block ">Edit Product</h2>
+          </div>
+        </div>
+        <div class="row tm-edit-product-row">
+          <div class="col-12">
+            <form action="/admin/viewproduct/edit-product/{{product._id}}" method="post" id="myform" class="">
+              <div class="form-group mb-3">
+                <label for="name">Product Name
+                </label>
+                <input id="productname" name="productname" type="text" class="form-control validate"
+                  value="{{product.productname}}" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="name">Brand Name
+                </label>
+                <input id="brandname" name="brandname" type="text" class="form-control validate"
+                  value="{{product.brandname}}" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="name">Price
+                </label>
+                <input id="price" name="price" type="number" class="form-control validate" value="{{product.price}}" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="title">Discount Price
+                </label>
+                <input id="discountprice" name="discountprice" type="number" class="form-control validate"
+                  value="{{product.discountprice}}" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="description">Description</label>
+                <textarea class="form-control validate" id="description" name="description"
+                  rows="3">{{product.description}}</textarea>
+              </div>
+              <div class="form-group mb-3">
+                <label for="category">Category</label>
+                <select class="custom-select tm-select-accounts" name="category" id="category">
+                  <option selected>{{product.category}}</option>
+                  {{#each category}}
+                  <option value="{{this.category}}">{{this.category}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="row">
+                <div class="form-group mb-3 col-6">
+                  <label for="title">Size
+                  </label>
+                  <input id="size" name="size" type="text" class="form-control validate" value="{{product.size}}" />
+                </div>
+                <div class="form-group mb-3 col-6">
+                  <label for="title">Units In Stock
+                  </label>
+                  <input id="unitsinstock" name="unitsinstock" type="number" class="form-control validate"
+                    value="{{product.unitsinstock}}" />
+                </div>
+              </div>
+          </div>
+          <div class="form-group col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+
+            <div>
+              <label for="formFileLg" class="form-label"></label>
+              <img src="/product-images/{{product.images.[0]}}" style="width: 18rem; height: 16rem;" alt=""
+                id="imgView">
+              <input class=" " id="formFileLg" type="file" name="Image" onchange="viewImage(event)" />
+            </div>
+
+          </div>
+
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block text-uppercase" form="myform"> Update Product Now
+            </button>
+          </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<footer class="tm-footer row tm-mt-small">
+  <div class="col-12 font-weight-light">
+    <p class="text-center text-white mb-0 px-4 small">
+      Copyright &copy; <b>2022</b> All rights reserved.
+    </p>
+  </div>
+</footer>
+{{!-- Edit Product form Validation --}}
+<script>
+  $(document).ready(function () {
+    $("#myform").validate({
+      rules: {
+        productname: {
+          required: true,
+
+        },
+        brandname: {
+          required: true,
+
+        },
+        price: {
+          required: true,
+        },
+        discountprice: {
+          required: true,
+        },
+        description: {
+          required: true,
+        },
+        category: {
+          required: true,
+        },
+        size: {
+          required: true,
+        },
+        unitsinstock: {
+          required: true,
+        },
+        image: {
+          required: true,
+        }
+      },
+      messages: {
+
+        productname: {
+          required: "Please enter your Product Name",
+
+        },
+        brandname: {
+          required: "Please enter your Brand Name",
+
+        },
+        price: {
+          required: "Please enter your Price",
+        },
+        discountprice: {
+          required: "Please enter your Discount Price",
+        },
+        description: {
+          required: "Please enter your Description",
+        },
+        category: {
+          required: "Please enter your Category",
+        },
+        size: {
+          required: "Please enter your size",
+        },
+        unitsinstock: {
+          required: "Please enter your Untsinstock",
+        },
+        image: {
+          required: "Please Add your image",
+        }
+      }
+    })
+  })
+</script>
+
+<style>
+  label.error {
+    color: rgb(255, 116, 116) !important;
+  }
+</style>
+<script>
+  $(function () {
+    $("#expire_date").datepicker();
+  });
+</script>
+
+{{!-- onchange="viewImage (event)" --}}
+<script>
+  function viewImage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+  }
+</script>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shoping Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <!--===============================================================================================-->
+</head>
+
+<body class="animsition">
+
+
+
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            {{!-- <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+                Home
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+
+            <span class="stext-109 cl4">
+                whishlist
+            </span> --}}
+        </div>
+    </div>
+
+    {{#if wishItems}}
+    <!-- WISHLIST -->
+    <form class="bg p-t-75 p-b-85">
+        <div class="container">
+            <div class="row">
+                <div class="col-10  m-lr-auto m-b-50">
+                    <div class="m-l-25 m-r--38 m-lr-0-xl">
+                        <div class="mb-2 txt-center" style=" color:rgb(5, 5, 5) ; bground-color:green">
+
+                            <h6 class="mb-2 txt-center"
+                                style="background-color:white ; color:rgb(5, 5, 5) ; font-size: xx-large;  font-weight:600 ">
+                                My wishlist</h6>
+                            <i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="wrap-table-shopping-cart">
+
+                            <table class="table-shopping-cart">
+                                {{!-- <tr class="table_head">
+                                    <th class="column-1 "> --}}
+
+                                        {{!-- </th>
+
+                                </tr> --}}
+                                {{#each wishItems}}
+                                <tr class="table_row">
+                                    <td class="column-1">
+                                        <div class="how-itemcart1">
+                                            <img src="/product-images/{{this.product.images.[0]}}" alt="IMG">
+                                        </div>
+                                    </td>
+                                    <td class="column-5">{{this.product.productname}}</td>
+                                    </td>
+                                    <td class="column-5">{{this.product.brandname}}</td>
+                                    <td class="column-5">{{this.product.price}}</td>
+                                    <td>
+                                        <button
+                                            onclick="addToCart('{{this.product._id}}','{{this.product.productname}}')"
+                                            class="btn btn-dark mr-12px hov-btn3 bor13">
+                                            Add to Cart
+                                        </button></a>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="btn btn-dark mr-12px hov-btn3 bor13" style=" margin-right: 20px;"
+                                            onclick="deleteWishProduct('{{this.product._id}}','{{this.product.productname}}')">
+                                            <i class="far fa-trash-alt tm-product-delete-icon "></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
+    {{else}}
+
+    <div class="container-fluid  mt-100" style="margin-bottom:9rem">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="card">
+
+                    <div class="card-body cart">
+                        <div class="col-sm-12 empty-cart-cls text-center">
+                            <img src="/wishlist.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                            <h3><strong>Your wishlist is Empty</strong></h3>
+                            {{!-- <h4>Add something to make me happy :)</h4> --}}
+                            <a href="/products" class="btn btn-dark cart-btn-transform m-3" data-abc="true">Create New
+                                Wishlist
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {{/if}}
+
+
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+
+
+
+
+    <script>
+
+        function deleteWishProduct(params, productname) {
+            $.ajax({
+                url: '/delete-wish-product/' + params,
+                method: 'get',
+                success: (response) => {
+                    if (response.removeProduct) { // if true (1)
+                        swal(productname, "is deleted from wishlist !", "warning")
+                    }
+                },
+                error: () => {
+                    location.href = ('/login')
+                }
+            })
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
+<style>
+    .mt-100 {
+        margin-top: 100px;
+
+    }
+
+
+    .card {
+        margin-bottom: 30px;
+        border: 0;
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+        letter-spacing: .5px;
+        border-radius: 8px;
+        -webkit-box-shadow: 1px 5px 24px 0 rgba(0, 0, 0, 0.05);
+        box-shadow: 1px 5px 24px 0 rgba(7, 7, 8, 0.05);
+    }
+
+    .card .card-header {
+        background-color: #fff;
+        border-bottom: none;
+        padding: 24px;
+        border-bottom: 1px solid #f6f7fb;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .card-header:first-child {
+        border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+    }
+
+
+
+    .card .card-body {
+        padding: 30px;
+        background-color: transparent;
+    }
+
+    .btn-primary,
+    .btn-primary.disabled,
+    .btn-primary:disabled {
+        background-color: #4466f2 !important;
+        border-color: #4466f2 !important;
+    }
+</style>

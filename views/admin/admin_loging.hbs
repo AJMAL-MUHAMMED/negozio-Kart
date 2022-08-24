@@ -1,0 +1,147 @@
+{{!-- <section class="vh-100" style="background-color: #f5f6f8f5;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10 col-md-7 col-lg-5 col-xl-4">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <form action="/admin/login" method="post" id="myform">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">Admin panel</h3>
+                            <div class="form-outline mb-4">
+                                {{#if session.adminNotfound}}
+                                <p class="text-danger">Wrong username or password</p>
+                                {{/if}}
+                                {{#if session.invalidPassword}}
+                                <p class="text-danger">Wrong password</p>
+                                {{/if}}
+                                <label class="form-label" for="Email">Email</label>
+                                <input type="email" id="Email" class="form-control form-control-md" name="Email" />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="Password">Password</label>
+                                <input type="password" id="Password" class="form-control form-control-md"
+                                    name="Password" />
+
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-primary">Login</button>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> --}}
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login Page - Product Admin Template</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="/css/templatemo-style.css">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+    
+	-->
+
+</head>
+ <style>
+        label.error {
+            color: rgb(255, 83, 83) !important ;
+        }
+    </style>
+
+<body>
+
+    <div class="container tm-mt-big tm-mb-big" style="margin-top: 8%;">
+        <div class="row">
+            <div class="col-12 mx-auto tm-login-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="tm-block-title mb-4">Welcome to Admin panel</h2>
+                        </div>
+                    </div>
+                    {{#if session.adminNotfound}}
+                    <p class="text-danger">Wrong username or password</p>
+                    {{/if}}
+                    {{#if session.invalidPassword}}
+                    <p class="text-danger">Wrong password</p>
+                    {{/if}}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <form action="/admin/login" method="post" id="myform">
+                                <div class="form-group">
+                                    <label for="Email">Username</label>
+                                    <input name="Email" type="text" class="form-control " id="Email" value="admin@gmail.com"/>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="Password">Password</label>
+                                    <input name="Password" type="password" class="form-control " id="Password" value="12345"/>
+
+                                </div>
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                                        Login
+                                    </button>
+                                </div>
+                                {{!-- <button class="mt-5 btn btn-primary btn-block text-uppercase">
+                                    Forgot your password?
+                                </button> --}}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!--
+    <script src="/js/jquery-3.3.1.min.js"></script> --}}
+    <!-- https://jquery.com/download/ -->
+    {{!--
+    <script src="/js/bootstrap.min.js"></script> --}}
+    <!-- https://getbootstrap.com/ -->
+   
+</body>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#myform").validate({
+            rules: {
+                Email: {
+                    required: true,
+                    email: true
+                },
+                Password: {
+                    required: true,
+                    minlength: 5
+                }
+            },
+            messages: {
+                Email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid Email address.",
+                },
+                Password: {
+                    required: "Please enter your password",
+                    minlength: "Your password must be at least 5 characters long"
+                }
+            }
+        })
+    })
+</script>

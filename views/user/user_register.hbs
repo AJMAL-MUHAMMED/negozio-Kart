@@ -1,0 +1,171 @@
+<head>
+    <meta charset="utf-8">
+    <title>Form-v5 by Colorlib</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Font-->
+    <link rel="stylesheet" type="text/css" href="/signup/css/roboto-font.css">
+    <link rel="stylesheet" type="text/css" href="/signup/fonts/font-awesome-5/css/fontawesome-all.min.css">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="/signup/css/style.css" />
+</head>
+
+<body class="form-v5">
+    <div class="page-content">
+        <div class="form-v5-content">
+            <form class="form-detail" action="/sign-up" method="post" id="regform">
+                <div class="d-flex justify-content-center">
+                    <img src="/images/negozio.png 1.png" alt="" style="width: 40%;">
+                </div>
+                <h2>Registration Form</h2>
+                {{#if session.userAlreadyExist}}
+                <p class="text-danger">This Email address already has a user account </p>
+                {{/if}}
+                <div class="form-row">
+                    <label for="FullName">Full Name</label>
+                    <input type="text" name="FullName" id="FullName" class="input-text" placeholder="Your Name">
+                    {{!-- <i class="fas fa-user"></i> --}}
+                </div>
+                <div class="form-row">
+                    <label for="Email">Your Email</label>
+                    <input type="email" name="Email" id="Email" class="input-text" placeholder="Your Email"
+                        pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                    {{!-- <i class="fas fa-envelope"></i> --}}
+                </div>
+                <div class="form-row">
+                    <label for="MobileNo">Mobile No</label>
+                    <input type="number" name="MobileNo" id="MobileNo" class="input-text" placeholder="Your Mobile No"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        maxlength="10">
+                    {{!-- <i class="fas fa-lock"></i> --}}
+                </div>
+                <div class="form-row">
+                    <label for="Password">Password</label>
+                    <input type="password" name="Password" id="Password" class="input-text" placeholder="Your Password">
+                    {{!-- <i class="fas fa-lock"></i> --}}
+                </div>
+                <div class="form-row">
+                    <label for="Confirmpassword">Confirm Password</label>
+                    <input type="password" name="Confirmpassword" id="Confirmpassword" class="input-text"
+                        placeholder="Your Confirm Password">
+                    {{!-- <i class="fas fa-lock"></i> --}}
+                </div>
+                <div class="form-row-last">
+                    <button type="submit" class="btn btn-primary">Register</button>
+
+                </div>
+                <br>
+                <div class="d-flex flex-row justify-content-center mb-13">
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Alredy have account <a href="/login"
+                            style="color: #393f81; font-weight: bold;"> SignIn </a> </p>
+                </div>
+            </form>
+            {{!-- <div class="d-flex flex-row justify-content-center mb-13">
+                <a href="/"> <i class="fa fa-backward" aria-hidden="true"></i> &nbsp Back to Home</a>
+            </div> --}}
+        </div>
+    </div>
+</body>
+
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+{{!-- login button disable code --}}
+{{!--
+<script>
+   // let input = document.querySelector("#Password");
+  //  let button = document.querySelector("#button");
+   // button.disabled = true;
+   // input.addEventListener("change", stateHandle);
+
+   // function stateHandle() {
+     //   if (document.querySelector("#Password").value === "") {
+   //         button.disabled = true;
+    //    } else {
+    //        button.disabled = false;
+    //    }
+   // }
+</script> --}}
+
+<script>
+    // jQuery.validator.addMethod("lettersonly", function (value, element) {
+    //      return this.optional(element) || /^[a-z]+$/i.test(value);
+    //   }, "Letters only please");
+
+    $.validator.addMethod("noCaps", function (value, element) {
+        return this.optional(element) || !/[A-Z]/.test(value);
+    }, "email can't have upper case letters");
+
+    $(document).ready(function () {
+        $("#regform").validate({
+            rules: {
+                FullName: {
+                    required: true,
+                    minlength: 4,
+                    //lettersonly: true
+
+                },
+                MobileNo: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10
+
+                },
+                Email: {
+                    required: true,
+                    email: true,
+                    noCaps: true
+
+
+                },
+                Password: {
+                    required: true,
+                    minlength: 5
+                },
+                Confirmpassword: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#Password"
+                }
+            },
+            messages: {
+                FullName: {
+                    required: "Please enter your name",
+                    lettersonly: 'Name should be alphabetical'
+                },
+                Email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address.",
+                    noCaps: 'use only lowercase letters and symbols'
+                },
+                MobileNo: {
+                    required: "Please enter your Number",
+                    minlength: "Minimum 10 numbers",
+                    maxlength: "Maximum 10 numbers"
+                },
+                Password: {
+                    required: "Enter your password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                Confirmpassword: {
+                    required: "Confirm your password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Please enter the same password as above"
+                }
+
+            }
+        })
+    })
+</script>

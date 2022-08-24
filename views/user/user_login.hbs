@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <section class="ftco-section">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                    <div>
+                        <a href="/"> <i class="fa fa-backward" aria-hidden="true"></i> &nbsp Back to Home</a>
+                    </div>
+                    <p></p>
+                    <div class="wrap d-md-flex">
+                        <div class="img"
+                            style="background-image: url('https://images.unsplash.com/photo-1616150326910-6fdb1e30adb7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60');">
+                        </div>
+
+                        <div class="login-wrap p-4 p-md-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="/images/negozio.png 1.png" alt="" style="width: 40%;">
+                                    </div>
+                                    <h3 class="mb-4">Sign In</h3>
+                                </div>
+                            </div>
+                            {{#if session.userblocked}}
+                            <p class="text-danger">Sorry! you have blocked</p>
+                            {{/if}}
+
+                            {{#if session.invalidUserid}}
+                            <p class="text-danger">User not found</p>
+                            {{/if}}
+
+                            {{#if session.invalidPassword}}
+                            <p class="text-danger">Wrong password</p>
+                            {{/if}}
+                            <form action="/login" method="post" id="myform" class="signin-form">
+                                <div class="form-group mb-3">
+                                    <label class="label" for="Email">Username</label>
+                                    <input name="Email" id="Email" type="text" class="form-control"
+                                        placeholder="Username" value="user@gmail.com">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="label" for="Password">Password</label>
+                                    <input name="Password" id="Password" type="password" class="form-control"
+                                        placeholder="Password" value="12345">
+                                </div>
+                                <div class="form-group">
+                                    <button style="background: #da9712 !important;
+                                     border: 1pxpx solid #da9712 !important; color: #fff !important" type="submit"
+                                        class="form-control btn btn-primary rounded submit px-3">SIGN IN</button>
+
+                                </div>
+
+
+                            </form>
+                            <form action="" id="otp-send">
+
+                                <p class="text-center " style="color: black; font-weight: bold;">LOGIN WITH OTP</p>
+                                <div class="form-group mb-3">
+                                    <input name="mob" id="mob" type="number" class="form-control"
+                                        placeholder="Enter Your Mobile No">
+                                </div>
+                                <!-- Button trigger modal -->
+                                <div class="form-group">
+                                    <button style="background: #da9712 !important;
+                                     border: 1pxpx solid #da9712 !important; color: #fff !important"
+                                        class="form-control btn btn-primary rounded submit px-" type="submit"
+                                        onclick="ready" class="btn btn-primary" data-bs-toggle="modal" id="otpbutton"
+                                        data-bs-target="#exampleModal">GET
+                                        OTP</button>
+                                </div>
+                            </form>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title " id="exampleModalLabel">Mobile No verification
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form id="otp-signin">
+                                            <div class="modal-body">
+                                                <div class="  d-flex flex-row mt-3 justify-content-center ">
+                                                    <input type="number" class="form-control num" name="otp"
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                        maxlength="4">
+                                                </div>
+                                                <p class="text-center text-danger">{{wrong}}</p>
+                                            </div>
+                                            <div class="modal-footer mt-3">
+                                                <button type="submit"
+                                                    style=" flex: auto; background-color: #da9712 !important;"
+                                                    class="btn btn-primary">Done</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex">
+                                <div class="w-50 text-left">
+                                    <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                {{!-- <div class="w-50 text-md-right">
+                                    <a href="#">Forgot Password</a>
+                                </div> --}}
+                            </div>
+                            <p class="text-center">Not a member? <a data-toggle="tab" href="/sign-up">Sign Up</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+
+<script>
+
+
+    $("#otp-send").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+            url: '/otp-send',
+            method: 'get',
+            data: $('#otp-send').serialize(),
+            success: (response) => {
+
+            }
+        })
+    });
+
+
+    $("#otp-signin").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+            url: '/otp-signin',
+            method: 'get',
+            data: $('#otp-signin').serialize(),
+            success: (response) => {
+                console.log(response.status)
+            }
+        })
+    });
+
+
+    $(document).ready(function () {
+        $("#otp-signin").validate({
+            rules: {
+                mob: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10
+
+                },
+
+
+            },
+            messages: {
+                mob: {
+                    required: "Please enter your Number",
+                    minlength: "Minimum 10 numbers",
+                    maxlength: "Maximum 10 numbers"
+                },
+            }
+        })
+    })
+</scrIpt>
+<script>
+    $(document).ready(function () {
+        $("#modalform").submit(function (e) {
+            e.preventDefault();
+            $(".modal").addClass("show");
+        });
+    });
+</script>
+
+
+
+
+
+
+<script>
+    let input = document.querySelector("#mob");
+    let button = document.querySelector("#otpbutton");
+    button.disabled = true;
+    input.addEventListener("change", stateHandle);
+
+    function stateHandle() {
+        if (document.querySelector("#mob").value.length < 10) {
+            button.disabled = true;
+        } else {
+            button.disabled = false;
+        }
+    }
+</script>
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .num {
+        width: 16rem;
+    }
+</style>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#myform").validate({
+            rules: {
+
+                Email: {
+                    required: true,
+                    email: true
+                },
+                Password: {
+                    required: true,
+                    minlength: 5
+                }
+
+            },
+            messages: {
+                Email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address.",
+                },
+                Password: {
+                    required: "Please enter your password",
+                    minlength: "Your password must be at least 5 characters long"
+                }
+            }
+        })
+    })
+</script>
