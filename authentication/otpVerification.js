@@ -37,19 +37,7 @@ module.exports = {
         })
     
     },
-    getOtpSign: (number) => {
-        number = "+91" + number;
-        return new Promise((resolve, reject) => {
-            client.verify.v2.services(config.serviceId)
-                .verifications
-                .create({ to: number, channel: 'sms' })
-                .then((response) => {
-                    resolve(response)
-                    console.log(response);
-                    console.log('get otp');
-                });
-        })
-    },
+   
 }
 
 

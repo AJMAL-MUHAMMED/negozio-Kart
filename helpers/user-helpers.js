@@ -76,18 +76,27 @@ const userHelpers = {
             }
         })
     },
-    checkNumber: (mob) => {
+    checkNumber: (body) => {
+        let mob = parseInt(body.mob)
         return new Promise((resolve, reject) => {
+            let response = {}
             db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mob }).then((status) => {
-                if (status) {
-                    resolve()
+                console.log(status);
+                if(status){
+                    if (status.Active) {
+                   resolve(status)
                 } else {
-                    db.get().collection(collection.USER_COLLECTION).findOne({MobileNo: mob,Active})
-                    reject()
+                    response.userblocked = true
+                    reject(response)
+                    console.log(response);
                 }
+                }else{
+                    response.invalidUserid = true
+                    reject(response)
+                }
+                
             })
         })
-
     },
     getDetails: (userId) => {
         return new Promise((resolve, reject) => {
@@ -100,10 +109,12 @@ const userHelpers = {
     isBlocked: (user) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(user._id) }).then((data) => {
-                if (data.Active) {
-                    resolve()
-                } else {
-                    reject()
+                if (data) {
+                    if (data.Active) {
+                        resolve()
+                    } else {
+                        reject()
+                    }
                 }
             })
         })

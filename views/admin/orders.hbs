@@ -31,7 +31,7 @@
                 <div class="col-12 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Orders List</h2>
-                        <table class="table">
+                        <table class="table" id="Datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">DELIVERY ADDRESS</th>
@@ -85,40 +85,32 @@
         </footer>
     </div>
 
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <!-- https://jquery.com/download/ -->
-    <script src="/js/moment.min.js"></script>
-    <!-- https://momentjs.com/ -->
-    <script src="/js/Chart.min.js"></script>
-    <!-- http://www.chartjs.org/docs/latest/ -->
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- https://getbootstrap.com/ -->
-    <script src="/js/tooplate-scripts.js"></script>
-    <script>
-        Chart.defaults.global.defaultFontColor = 'white';
-        let ctxLine,
-            ctxBar,
-            ctxPie,
-            optionsLine,
-            optionsBar,
-            optionsPie,
-            configLine,
-            configBar,
-            configPie,
-            lineChart;
-        barChart, pieChart;
-        // DOM is ready
-        $(function () {
-            drawLineChart(); // Line Chart
-            drawBarChart(); // Bar Chart
-            drawPieChart(); // Pie Chart
 
-            $(window).resize(function () {
-                updateLineChart();
-                updateBarChart();
-            });
-        })
-    </script>
 </body>
 
-</html>
+
+<script>
+    $(document).ready(function () {
+        $('#Datatable').DataTable();
+    });
+</script>
+
+<style>
+    .dataTables_length select {
+        /* background-color: rgb(255, 255, 255) !important; */
+        color: #000000 !important;
+    }
+
+    /* .dataTables_filter input  {
+  background-color: black !important; 
+  color: #fefeff !important;
+} */
+    .dataTables_length label {
+        color: #efefef !important;
+    }
+
+    .dataTables_filter label {
+        color: #ffffff !important;
+
+    }
+</style>

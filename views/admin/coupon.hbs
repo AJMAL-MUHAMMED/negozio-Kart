@@ -35,19 +35,23 @@
                             <div class="modal-body">
                                 <div class="form-group mb-3 col">
                                     <label for="title" style="color:black ;">Copon Id</label>
-                                    <input id="title" name="couponId" type="text" class="form-control validate" required />
+                                    <input id="title" name="couponId" type="text" class="form-control validate"
+                                        required />
                                 </div>
                                 <div class="form-group mb-3 col">
                                     <label for="title" style="color:black ;">Coupon Code</label>
-                                    <input id="title" name="couponCode" type="text" class="form-control validate"  required />
+                                    <input id="title" name="couponCode" type="text" class="form-control validate"
+                                        required />
                                 </div>
                                 <div class="form-group mb-3 col">
                                     <label for="title" style="color:black ;">Description</label>
-                                    <input id="title" name="description" type="text" class="form-control validate" required />
+                                    <input id="title" name="description" type="text" class="form-control validate"
+                                        required />
                                 </div>
                                 <div class="form-group mb-3 col">
                                     <label for="title" style="color:black ;">Discount</label>
-                                    <input id="title" name="discount" type="text" class="form-control validate" required />
+                                    <input id="title" name="discount" type="text" class="form-control validate"
+                                        required />
                                 </div>
                             </div>
                             <div class="modal-footer ">
@@ -71,7 +75,7 @@
                     <div class="col-12 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                             <h2 class="tm-block-title">All Coupons</h2>
-                            <table class="table">
+                            <table class="table" id="Datatable">
                                 <thead>
                                     <tr>
                                         <th scope="col">COUPON ID</th>
@@ -92,7 +96,7 @@
                                         <td>{{this.discount}}%</td>
                                         <td>
                                             {{!-- modal button --}}
-                                            <button  class=" btn btn-dark p-1" data-toggle="modal"
+                                            <button class=" btn btn-dark p-1" data-toggle="modal"
                                                 data-target="#exampleModalCouponEdit{{this._id}}"
                                                 style="font-size: small;">Edit</button>
 
@@ -103,8 +107,8 @@
 
                                     </tr>
                                     {{!-- modal body --}}
-                                    <div class="modal fade" id="exampleModalCouponEdit{{this._id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModalCouponEdit{{this._id}}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -122,27 +126,27 @@
                                                             <label for="title" style="color:black ;">Copon
                                                                 Id</label>
                                                             <input id="title" name="couponId" type="text"
-                                                                class="form-control validate"
-                                                                value="{{this.couponId}}" required />
+                                                                class="form-control validate" value="{{this.couponId}}"
+                                                                required />
                                                         </div>
                                                         <div class="form-group mb-3 col">
                                                             <label for="title" style="color:black ;">Coupon
                                                                 Code</label>
                                                             <input id="title" name="couponCode" type="text"
                                                                 class="form-control validate"
-                                                                value="{{this.couponCode}}"  required />
+                                                                value="{{this.couponCode}}" required />
                                                         </div>
                                                         <div class="form-group mb-3 col">
                                                             <label for="title" style="color:black ;">Description</label>
                                                             <input id="title" name="description" type="text"
                                                                 class="form-control validate"
-                                                                value="{{this.description}}"  required/>
+                                                                value="{{this.description}}" required />
                                                         </div>
                                                         <div class="form-group mb-3 col">
                                                             <label for="title" style="color:black ;">Discount</label>
                                                             <input id="title" name="discount" type="text"
-                                                                class="form-control validate"
-                                                                value="{{this.discount}}"  required/>
+                                                                class="form-control validate" value="{{this.discount}}"
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer ">
@@ -180,7 +184,7 @@
                 </div>
             </footer>
 
-            <script src="/js/jquery-3.3.1.min.js"></script>
+            {{!-- <script src="/js/jquery-3.3.1.min.js"></script> --}}
             <!-- https://jquery.com/download/ -->
             <script src="/js/bootstrap.min.js"></script>
             <!-- https://getbootstrap.com/ -->
@@ -203,5 +207,31 @@
         background-color: #fff;
         height: 1px;
         width: 100%%;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#Datatable').DataTable();
+    });
+</script>
+
+<style>
+    .dataTables_length select {
+        /* background-color: rgb(255, 255, 255) !important; */
+        color: #000000 !important;
+    }
+
+    /* .dataTables_filter input  {
+  background-color: black !important; 
+  color: #fefeff !important;
+} */
+    .dataTables_length label {
+        color: #efefef !important;
+    }
+
+    .dataTables_filter label {
+        color: #ffffff !important;
+
     }
 </style>

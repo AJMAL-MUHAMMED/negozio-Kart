@@ -48,11 +48,23 @@ router.post('/login', (req, res) => {
   adminController.doLogin(req, res)
 });
 
+/////////////////////////////////////////////////// dashbord management //////////////////////////////////////////////////
+
 // dash board
 
 router.get('/dashbord', (req, res) => {
   res.render('admin/admin_dashbord', { dashbord: true, admin_header: true })
 });
+
+
+router.get('/chartData', async(req, res)=>{
+  let sales = await adminHelper.getDayWiseTotalSalesAmount();
+  const category = await  adminHelper.categoryWiseSaleCount()
+    sales = sales.slice(-10);
+
+    res.json({sales : sales, category : category[0]});
+
+})
 
 
 /////////////////////////////////////////////////// user management //////////////////////////////////////////////////

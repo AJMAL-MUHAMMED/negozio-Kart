@@ -10,6 +10,7 @@ const categoryHelper = require('../helpers/category-helper');
 const authentication = require('../authentication/otpVerification');
 const { response } = require('../app');
 const { get } = require('mongoose');
+const { log } = require('handlebars');
 
 const verifyLogin = (req, res, next) => {
   if (req.session.user) {
@@ -80,7 +81,6 @@ router.post('/sign-up', (req, res, next) => {
 
 /////////////////////////////////////////////////// Otp verification //////////////////////////////////////////////////
 
-
 //otp verification sign Up
 
 router.get('/otp-verification', (req, res) => {
@@ -113,24 +113,36 @@ router.post('/otp-verify', (req, res) => {
 })
 
 // otp send in singn in
-router.get('/otp-send', (req, res) => {
-  userHelpers.checkNumber(req.body.mob).then((yes) => {
+
+router.post('/login/otp-send', (req, res) => {
+
+  userHelpers.checkNumber(req.body).then((user) => {
+    req.session.mob = parseInt(req.body.mob)
+    req.session.tempUser = user;
     authentication.getOtp(req.body.mob)
-    req.session.user = true
+    res.render('user/otp-signin', { number: req.body.mob })
+  }).catch((response) => {
+    if(response.invalidUserid){
+      req.session.invalidUserid=true
     res.redirect('/login')
-  }).catch(() => {
-
+    }else{
+       req.session.userblocked = true
+    res.redirect('/login')
+    }
+   
   })
-  res.json({ status: true })
 })
-
 
 // otp verification in sign In
 
-router.get('/otp-signin', (req, res) => {
-  authentication.checkOtp(req.body.otp, req.body.mob).then((status) => {
+router.post('/otp-with-signin', (req, res) => {
+  authentication.checkOtp(req.body.otp, req.session.mob).then((status) => {
     if (status == 'approved') {
-
+      req.session.user = req.session.tempUser;
+      res.redirect('/')
+    } else {
+      req.session.wrongOtp = true
+      res.render('user/otp-signin', { wrongOtp: 'wrongOtp' })
     }
   })
 })
@@ -184,6 +196,7 @@ router.post('/address/addaddress', verifyLogin, (req, res) => {
 });
 
 // address delete 
+
 router.get('/userprofile/deleteaddress/:id', (req, res, next) => {
   userHelpers.deleteAddress(req.params.id,).catch((err) => {
     next(err)
@@ -275,8 +288,6 @@ router.get('/products', async (req, res) => {
     cartItems = response.cartItems
     cartEmpty = response.cartEmpty
   }
-
-
   let products = await productHelper.getAllProduct()
   res.render('user/product', { user_header: true, user_footer: true, user, products, cartEmpty, cartItems, cartCount, totalValue, wishProCount })
 });

@@ -128,5 +128,115 @@ module.exports = {
             }
 
         })
+    },
+    getDayWiseTotalSalesAmount : ()=>{
+        return new Promise(async(resolve, reject)=>{
+            const data = await db.get().collection(collection.ORDER_COLLECTION).aggregate(
+                [
+                    {
+                      '$group': {
+                        '_id': '$date', 
+                        'total': {
+                          '$sum': '$grandTotal'
+                        }
+                      }
+                    }, {
+                      '$group': {
+                        '_id': null, 
+                        'data': {
+                          '$push': {
+                            'date': '$_id', 
+                            'total': '$total'
+                          }
+                        }
+                      }
+                    }, {
+                      '$project': {
+                        '_id': 0, 
+                        'data': 1
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$data'
+                      }
+                    }, {
+                      '$sort': {
+                        'data.date': 1
+                      }
+                    }, {
+                      '$group': {
+                        '_id': null, 
+                        'data': {
+                          '$push': '$data'
+                        }
+                      }
+                    }, {
+                      '$project': {
+                        '_id': 0, 
+                        'data': 1
+                      }
+                    }
+                  ]
+            ).toArray()
+            
+            resolve(data[0].data)
+        })
+    },
+    categoryWiseSaleCount : ()=>{
+        return new Promise(async(resolve, reject) =>{
+            const data = await  db.get().collection(collection.ORDER_COLLECTION).aggregate(
+                [
+                    {
+                      '$project': {
+                        '_id': 0, 
+                        'products': 1
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$products'
+                      }
+                    }, {
+                      '$lookup': {
+                        'from': 'product', 
+                        'localField': 'products.item', 
+                        'foreignField': '_id', 
+                        'as': 'result'
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$result'
+                      }
+                    }, {
+                      '$project': {
+                        'products.quantity': 1, 
+                        'result.category': 1
+                      }
+                    }, {
+                      '$group': {
+                        '_id': '$result.category', 
+                        'qty': {
+                          '$sum': 1
+                        }
+                      }
+                    }, {
+                      '$group': {
+                        '_id': null, 
+                        'data': {
+                          '$push': {
+                            'category': '$_id', 
+                            'qty': '$qty'
+                          }
+                        }
+                      }
+                    }, {
+                      '$project': {
+                        '_id': 0, 
+                        'data': 1
+                      }
+                    }
+                  ]
+            ).toArray()
+            resolve(data)
+        })
     }
 }
