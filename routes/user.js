@@ -37,7 +37,9 @@ router.get('/', async function (req, res, next) {
     cartItems = response.cartItems
     cartEmpty = response.cartEmpty
   }
-  let products = await productHelper.getAllProduct()
+  let products = await productHelper.getAllProduct().catch((err) => {
+    next(err)
+  })
   let slider = await sliderHelper.getAllSlider()
   let categories = await categoryHelper.getAllCategory()
   res.render('user/user_home', {
@@ -122,14 +124,14 @@ router.post('/login/otp-send', (req, res) => {
     authentication.getOtp(req.body.mob)
     res.render('user/otp-signin', { number: req.body.mob })
   }).catch((response) => {
-    if(response.invalidUserid){
-      req.session.invalidUserid=true
-    res.redirect('/login')
-    }else{
-       req.session.userblocked = true
-    res.redirect('/login')
+    if (response.invalidUserid) {
+      req.session.invalidUserid = true
+      res.redirect('/login')
+    } else {
+      req.session.userblocked = true
+      res.redirect('/login')
     }
-   
+
   })
 })
 
@@ -273,7 +275,7 @@ router.get('/userprofile/vieworders/order-cancel/:id', (req, res, next) => {
 
 // products
 
-router.get('/products', async (req, res) => {
+router.get('/products', async (req, res, next) => {
   let user = req.session.user
   let cartItems = null
   let cartEmpty = null
@@ -288,7 +290,9 @@ router.get('/products', async (req, res) => {
     cartItems = response.cartItems
     cartEmpty = response.cartEmpty
   }
-  let products = await productHelper.getAllProduct()
+  let products = await productHelper.getAllProduct().catch((err) => {
+    next(err)
+  })
   res.render('user/product', { user_header: true, user_footer: true, user, products, cartEmpty, cartItems, cartCount, totalValue, wishProCount })
 });
 
@@ -441,7 +445,7 @@ router.post('/place-order', async (req, res, next) => {
   try {
     let products = await userHelpers.getCartProductList(req.body.userId)
     let totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-    userHelpers.placeOrder(req.body, products, totalPrice, req.body.userId, req.session.coupon).then(async (orderId) => {
+    userHelpers.placeOrder(req.body, products, totalPrice, req.body.userId, req.session.coupon, req.session.discount).then(async (orderId) => {
       req.session.orderId = orderId
       let GrandTotal = await userHelpers.getGrandTotal(orderId)
       req.session.order = GrandTotal
@@ -538,10 +542,12 @@ router.post('/verify-payment', (req, res) => {
 /////////////////////////////////////////////////// invoice //////////////////////////////////////////////////
 
 router.get('/userprofile/vieworders/invoice-download/:id', (req, res, next) => {
-  userHelpers.getInvoice(req.params.id, req.session.user._id).catch((err) => {
+  userHelpers.getInvoice(req.params.id).then((data) => {
+    console.log(data + "   then")
+    res.render('user/invoice', { data })
+  }).catch((err) => {
     next(err)
   })
-  res.render('user/invoice')
 })
 /////////////////////////////////////////////////// logout //////////////////////////////////////////////////
 

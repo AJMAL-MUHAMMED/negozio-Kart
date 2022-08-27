@@ -82,19 +82,19 @@ const userHelpers = {
             let response = {}
             db.get().collection(collection.USER_COLLECTION).findOne({ MobileNo: mob }).then((status) => {
                 console.log(status);
-                if(status){
+                if (status) {
                     if (status.Active) {
-                   resolve(status)
+                        resolve(status)
+                    } else {
+                        response.userblocked = true
+                        reject(response)
+                        console.log(response);
+                    }
                 } else {
-                    response.userblocked = true
-                    reject(response)
-                    console.log(response);
-                }
-                }else{
                     response.invalidUserid = true
                     reject(response)
                 }
-                
+
             })
         })
     },
@@ -491,7 +491,7 @@ const userHelpers = {
             }
         })
     },
-    placeOrder: (order, products, totalPrice, userId, coupon) => {
+    placeOrder: (order, products, totalPrice, userId, coupon, discount) => {
         return new Promise((resolve, reject) => {
             // console.log(order, products, totalPrice);
             order.subtotal = parseInt(order.subtotal)
@@ -511,6 +511,7 @@ const userHelpers = {
                 products: products,
                 subTotal: order.subtotal,
                 DDC: order.DDC,
+                discount: discount,
                 grandTotal: order.grandtotal,
                 status: status,
                 date: date,
@@ -659,13 +660,53 @@ const userHelpers = {
             }
         })
     },
-    getInvoice: (orderId, userId) => {
-        return new Promise((resolve, reject) => {
+    getInvoice: (orderId) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                db.get().collection(collection.ORDER_COLLECTION).findOne(orderId, userId).then((response) => {
-                    console.log(response);
-                    resolve()
-                })
+
+                let data = await db.get().collection(collection.ORDER_COLLECTION).aggregate(
+                    [
+                        {
+                            '$match': {
+                                '_id': objectId(orderId)
+                            }
+                        },
+                        {
+                            '$unwind': {
+                                'path': '$products'
+                            }
+                        }, {
+                            '$lookup': {
+                                'from': 'product',
+                                'localField': 'products.item',
+                                'foreignField': '_id',
+                                'as': 'productDetails'
+                            }
+                        }, {
+                            '$unwind': {
+                                'path': '$productDetails'
+                            }
+                        }, {
+                            '$project': {
+                                '_id': 0,
+                                'Address': '$DeliveryAddress',
+                                'orderId': '$_id',
+                                'Date': '$date',
+                                'Time': '$time',
+                                'ProductName': '$productDetails.productname',
+                                'BrandName': '$productDetails.brandname',
+                                'ProductPrice': '$productDetails.price',
+                                'Quantity': '$products.quantity',
+                                'Total': '$subTotal',
+                                'Discount': '$discount',
+                                'GrandTotal': '$grandTotal'
+                            }
+                        }
+                    ]
+                ).toArray()
+                console.log(data)
+                resolve(data[0])
+
             } catch (err) {
                 reject(err);
             }

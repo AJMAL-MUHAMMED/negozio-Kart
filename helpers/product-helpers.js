@@ -24,8 +24,12 @@ module.exports = {
     },
     getAllProduct: () => {
         return new Promise(async (resolve, reject) => {
-            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
-            resolve(products)
+            try {
+                let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
+                resolve(products)
+            } catch (err) {
+                reject(err)
+            }
         })
     },
     deleteProduct: (proId) => {

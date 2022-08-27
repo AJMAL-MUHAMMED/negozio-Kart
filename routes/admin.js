@@ -57,15 +57,19 @@ router.get('/dashbord', (req, res) => {
 });
 
 
-router.get('/chartData', async(req, res)=>{
+router.get('/chartData', async (req, res) => {
   let sales = await adminHelper.getDayWiseTotalSalesAmount();
-  const category = await  adminHelper.categoryWiseSaleCount()
-    sales = sales.slice(-10);
+  const category = await adminHelper.categoryWiseSaleCount()
+  sales = sales.slice(-10);
 
-    res.json({sales : sales, category : category[0]});
+  res.json({ sales: sales, category: category[0] });
+})
+router.get('/reportData', async (req, res) => {
+  adminHelper.getReport().then((data) => { 
+    res.json(data)
+  })
 
 })
-
 
 /////////////////////////////////////////////////// user management //////////////////////////////////////////////////
 

@@ -63,40 +63,42 @@
 
                     {{#each orders}}
                     <tr scope="row">
-                        <th scope="row">
+                        <th scope="row"><br>
                             <label class="control control--checkbox">
                                 <input type="checkbox" />
                                 <div class="control__indicator"></div>
                             </label>
                         </th>
-                        <td>
+                        <td><br>
                             <a href="/orders/view-order-products/{{this._id}}">{{order this._id}}</a>
                         </td>
                         <td>{{this.paymentMethod}}</td>
-                        <td>
+                        <td> 
                             {{this.DeliveryAddress}}
                             {{!-- <small class="d-block">{{this.DeliveryAddress}}</small> --}}
                         </td>
-                        <td>{{this.date}}</td>
-                        <td>Rs.{{this.grandTotal}}</td>
+                        <td><br>{{this.date}}</td>
+                        <td> <br> Rs.{{this.grandTotal}}</td>
 
                         {{#if (eq this.status "placed")}}
-                        <td class="st" style="color: green;">{{this.status}}</td>
+                        <td class="st" style="color: green;"><br>{{this.status}}</td>
                         {{else if (eq this.status "pending")}}
-                        <td class="st" style="color:rgb(239, 166, 9);">{{this.status}}</td>
+                        <td class="st" style="color:rgb(239, 166, 9);"><br>{{this.status}}</td>
                         {{else if (eq this.status "shipped")}}
-                        <td class="st" style="color:blue;">{{this.status}}</td>
+                        <td class="st" style="color:blue;"><br>{{this.status}}</td>
                         {{else}}
-                        <td class="st" style="color:red;">{{this.status}}</td>
+                        <td class="st" style="color:red;"><br>{{this.status}}</td>
                         {{/if}}
                         <td>
+                            <br>
                             <a href="/userprofile/vieworders/order-cancel/{{this._id}}"
                                 class="link-danger">&nbsp&nbsp&nbsp&nbsp<i class="fa fa-ban" aria-hidden="true"></i> </a >
                         </td>
 
                         <td>
+                            <br>
                             <a href="/userprofile/vieworders/invoice-download/{{this._id}}"
-                                class="link-primary">Download </a>
+                                class="link-primary">Invoice </a>
                         </td>
                     </tr>
                     {{/each}}
