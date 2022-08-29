@@ -312,7 +312,21 @@ router.get('/productdetails/:id', async (req, res, next) => {
   let productdetails = await productHelper.findProduct(req.params.id).catch((err) => {
     next(err)
   })
-  res.render('user/product-details', { user_footer: false, productdetails })
+  let user = req.session.user
+  let cartItems = null
+  let cartEmpty = null
+  let cartCount = null
+  let totalValue = null
+  let wishProCount = null
+  if (req.session.user) {
+    totalValue = await userHelpers.getTotalAmount(user._id)
+    const response = await userHelpers.getCartProduct(user._id);
+    cartCount = await userHelpers.getCartCount(user._id);
+    wishProCount = await userHelpers.wishProCount(user._id)
+    cartItems = response.cartItems
+    cartEmpty = response.cartEmpty
+  }
+  res.render('user/product-details', { user_header: true,  user,  cartEmpty, cartItems, cartCount, totalValue, wishProCount, productdetails })
 });
 
 /////////////////////////////////////////////////// whishlist //////////////////////////////////////////////////
