@@ -227,11 +227,23 @@ router.post('/proceed-to-checkout/Add', verifyLogin, (req, res) => {
 //user profile
 
 router.get('/userprofile', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let cartItems = null
+  let cartEmpty = null
+  let cartCount = null
+  let totalValue = null
+  let wishProCount = null
   if (req.session.user) {
+    totalValue = await userHelpers.getTotalAmount(user._id)
+    const response = await userHelpers.getCartProduct(user._id);
+    cartCount = await userHelpers.getCartCount(user._id);
+    wishProCount = await userHelpers.wishProCount(user._id)
+    cartItems = response.cartItems
+    cartEmpty = response.cartEmpty
     let address = await userHelpers.getAddress(req.session.user._id)
     let addressEdit = await userHelpers.getAddress(req.session.user._id)
     let userDetails = await userHelpers.getUserDetails(req.session.user._id)
-    res.render('user/user-profile', { userDetails, address, addressEdit })
+    res.render('user/user-profile', { user_header: true, cartItems, cartEmpty, cartCount, totalValue, wishProCount, user, userDetails, address, addressEdit })
   }
 });
 

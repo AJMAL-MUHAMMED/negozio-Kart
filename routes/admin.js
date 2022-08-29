@@ -65,7 +65,7 @@ router.get('/chartData', async (req, res) => {
   res.json({ sales: sales, category: category[0] });
 })
 router.get('/reportData', async (req, res) => {
-  adminHelper.getReport().then((data) => { 
+  adminHelper.getReport().then((data) => {
     res.json(data)
   })
 
@@ -177,9 +177,11 @@ router.get('/viewproduct/details/:id', (req, res, next) => {
 
 // get slider
 
-router.get('/slider', (req, res) => {
+router.get('/slider', (req, res, next) => {
   sliderHelper.getAllSlider().then((sliders) => {
     res.render('admin/slider', { slider: true, admin_header: true, sliders })
+  }).catch((err) => {
+    next(err)
   })
 });
 

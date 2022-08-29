@@ -13,10 +13,15 @@ module.exports = {
         })
     },
     getAllSlider: () => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collection.SLIDER_COLLECTION).find().toArray().then(sliders => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let sliders = await db.get().collection(collection.SLIDER_COLLECTION).find().toArray()
                 resolve(sliders)
-            })
+
+            } catch (err) {
+                reject(err)
+            }
+
 
         })
     },

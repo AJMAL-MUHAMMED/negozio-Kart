@@ -9,7 +9,7 @@ function addToCart(proId, productname) {
                 count = parseInt(count) + 1
                 $('#cartcount').html(count)
                 swal(productname, "is Quantity increase !", "success")
-                location.reload()
+                // location.reload()
             } else if (response.PushedItem) {
                 swal(productname, "is added to cart !", "success")
             } else if (response.addToCart) {
